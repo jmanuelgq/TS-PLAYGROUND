@@ -1,42 +1,45 @@
-function createList(
-  listId: string, 
-  titulo: string, 
-  listArray: string[]
-):void {
-  const div: HTMLDivElement = document.createElement("div");
-  div.classList.add(listId);
-  const ul: HTMLUListElement = document.createElement("ul");
-  const h2: HTMLHeadingElement= document.createElement("h2");
-  document.body.append(div);
-  div.append(h2);
-  h2.textContent = titulo;
-  div.append(ul);
+// <div id="root">
+//   <div class="counter">
+//     <p class="counter__display">0</p>
+//     <div class="counter__actions">
+//       <button class="counter__button">Decrement</button>
+//       <button class="counter__button">Increment</button>
+//       <button class="counter__button">Reset</button>
+//     </div>
+//   </div>
+// </div>
 
-  const candidatos = listArray;
-  candidatos.forEach((candidato) => {
-    const li:HTMLLIElement = document.createElement("li");
-    li.textContent = candidato;
-    ul.append(li);
-  });
+import React, { type ReactElement } from "react";
+import ReactDom from "react-dom/client";
 
-  ul.addEventListener("click", function (event: Event) {
-    const target = event.target as HTMLElement;
-    if (target.tagName === "LI") {
-      target.classList.toggle("selected");
-    }
-  });
-}
+import "./style.css";
 
-createList("listId", "quien ganara las elecciones?", [
-  "Porky",
-  "Vizcarra",
-  "Antauro",
-  "Keiko",
-  "Butters",
-]);
-createList("listId", "Cual es tu postre favorito?", [
-  "Pie de limon",
-  "3 leches",
-  "leche asada",
-  "torta de chocolate",
-]);
+const container: HTMLDivElement = document.querySelector("#root")!;
+
+const root: ReactDom.Root = ReactDom.createRoot(container);
+
+const buttonDiv: ReactElement = React.createElement(
+  "div",
+  {className: "counter__actions"},
+  React.createElement("button", {className: "counter__button"}, "Decrement"),
+  React.createElement("button", {className: "counter__button"}, "Increment"),
+  React.createElement("button", {className: "counter__button"}, "Reset"),
+);
+
+const counterDiv: ReactElement = React.createElement(
+  "div",
+  {className: "counter"},
+  React.createElement("p", {className:"counter__display"},0),
+  buttonDiv
+);
+
+root.render(counterDiv);
+
+// const element: ReactElement = React.createElement(
+//   "div",
+//   { className: "container"},
+//   "Hola Mundo",
+//   React.createElement("h2", null, "Hola Mundo"),
+// );
+
+// root.render(element)
